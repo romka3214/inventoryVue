@@ -58,6 +58,10 @@ const closeDeleteItemPopUp = () => {
 }
 const changeQuantity = (number) => {
     emit('changeQuantity', props.item, number);
+    if(props.item.count <= number){
+        close();
+    }
+    
 }
 
 

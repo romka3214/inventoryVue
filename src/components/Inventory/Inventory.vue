@@ -17,6 +17,7 @@ import { ref, watch, onMounted } from 'vue';
 
 
 const items = ref([]);
+
 onMounted(() => {
   if (localStorage.getItem('items')) {
     try {
@@ -210,7 +211,6 @@ onMounted(() => {
 const updateLocalStorage = () => {
   const parsed = JSON.stringify(items.value);
   localStorage.setItem('items', parsed);
-  console.log('сохраняем...');
 }
 
 
@@ -232,7 +232,12 @@ function closeModal() {
 
 function changeQuantity(item, number) {
   let itemFind = items.value.findIndex((i) => i.id === item.id)
-  items.value[itemFind].count = items.value[itemFind].count - number;
+
+  if (items.value[itemFind].count <= number) {
+    items.value[itemFind] = {}
+  } else{
+    items.value[itemFind].count = items.value[itemFind].count - number;
+  }
   updateLocalStorage();
 }
 

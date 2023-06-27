@@ -1,5 +1,5 @@
 <script setup>
-import Inventory from './components/Inventroy/Inventory.vue';
+import Inventory from './components/Inventory/Inventory.vue';
 import Skeleton from './components/UI/Skeleton.vue';
 import CloseButton from './components/UI/CloseButton.vue';
 

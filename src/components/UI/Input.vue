@@ -1,12 +1,10 @@
 <template>
-    <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" required class="input" type="number"
+    <input inputmode="numeric" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" required class="input" type="number"
         placeholder="Введите количество">
 </template>
 <script setup>
 defineProps({
-    modelValue: {
-        type: Number,
-    }
+    modelValue: null,
 });
 
 </script>

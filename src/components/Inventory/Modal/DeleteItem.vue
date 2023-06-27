@@ -1,6 +1,6 @@
 <template>
     <div class="deleteForm">
-        <Input style="margin-bottom: 20px;" v-model.number="input" />
+        <Input style="margin-bottom: 20px;" v-model.number="input" onkeyup="this.value = this.value.replace('/^\d+$/','');" />
         <div class="flex">
             <Button @click="emit('closeDeleteItemPopUp');">
                 Отмена
@@ -20,6 +20,10 @@ import { ref } from 'vue';
 const emit = defineEmits(['closeDeleteItemPopUp', 'changeQuantity'])
 
 const input = ref(null);
+
+const validate = (event) =>{
+    console.log(event);
+}
 
 const submit = () => {
     if (input.value > 0) {
