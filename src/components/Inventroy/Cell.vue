@@ -5,13 +5,14 @@ const props = defineProps({
     index: Number,
 })
 
-const emit = defineEmits(['movedItem'])
+const emit = defineEmits(['movedItem', 'openModal'])
 
 
 const startDrag = (event, id) => {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('id', id);
+    console.log('drag');
 }
 
 const onDrop = (event, id) => {
@@ -25,10 +26,14 @@ const dragEnter = (e) => {
 const dragOver = (e) => {
     e.target.classList.remove('over');
 }
+const click = () => {
+    emit('openModal', props.item)
+    console.log(props.item);
+}
 </script>
 
 <template>
-    <div v-if="Object.keys(item).length !== 0" draggable="true" @dragstart="startDrag($event, index)"
+    <div v-if="Object.keys(item).length !== 0" draggable="true" @click="click" @dragstart="startDrag($event, index)"
         class="inventory_cell">
         <img :src=item.ico alt="">
         <div class="count">
@@ -59,8 +64,7 @@ const dragOver = (e) => {
     }
 
     &[draggable="true"] {
-        cursor: grab;
-
+        cursor: pointer;
         img {
             height: 54px;
             width: 54px;
