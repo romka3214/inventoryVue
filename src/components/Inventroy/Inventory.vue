@@ -1,0 +1,121 @@
+<template>
+    <div class="inventory_main">
+        <Cell @movedItem="moveItem" v-for="(item, index) in items" :item="item" :key="index" :index="index" />
+
+    </div>
+</template>
+<script setup>
+import Cell from './Cell.vue';
+import { ref } from 'vue';
+
+
+const items = ref([
+  {
+    name: 'Предмет1',
+    description: 'Описание',
+    ico: '/src/assets/img/ico1.png',
+    count: 9,
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+    name: 'Предмет3',
+    description: 'Описание',
+    ico: '/src/assets/img/ico3.png',
+    count: 9,
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+    name: 'Предмет2',
+    description: 'Описание',
+    ico: '/src/assets/img/ico2.png',
+    count: 9,
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+])
+
+function moveItem($currItemID, $placeToMountID) {
+  [items.value[$currItemID], items.value[$placeToMountID]] = [items.value[$placeToMountID], items.value[$currItemID]];
+  
+  // console.log(items.value[$placeToMountID]);
+  // let item = items.value[$currItemID];
+  // items.value[$placeToMountID] = items.value[$currItemID].item;
+  // items.value[$currItemID].item = undefined;
+  // items.value.find(item => item.id == $placeToMountID);
+}
+
+</script>
+<style lang="scss">
+.inventory_main {
+    border-radius: 12px;
+    border: 1px solid #4D4D4D;
+    background: #262626;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+</style>
