@@ -12,9 +12,9 @@
     </div>
 </template>
 <script setup>
-import ButtonRed from './../UI/ButtonRed.vue';
-import Button from './../UI/Button.vue';
-import Input from './../UI/Input.vue';
+import ButtonRed from './../../UI/ButtonRed.vue';
+import Button from './../../UI/Button.vue';
+import Input from './../../UI/Input.vue';
 import { ref } from 'vue';
 
 const emit = defineEmits(['closeDeleteItemPopUp', 'changeQuantity'])

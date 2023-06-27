@@ -9,101 +9,215 @@
 
   </div>
 </template>
+
 <script setup>
 import Cell from './Cell.vue';
-import Modal from './Modal.vue';
-import { ref } from 'vue';
+import Modal from './Modal/Modal.vue';
+import { ref, watch, onMounted } from 'vue';
 
 
-const items = ref([
-  {
-    id: 1,
-    name: 'Предмет1',
-    description: 'Описание',
-    ico: '/src/assets/img/ico1.png',
-    count: 9,
-  },
-  {
+const items = ref([]);
+onMounted(() => {
+  if (localStorage.getItem('items')) {
+    try {
+      items.value = JSON.parse(localStorage.getItem('items'));
+    } catch (e) {
+      localStorage.removeItem('items');
+      items.value = [
+        {
+          id: 1,
+          name: 'Предмет1',
+          description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.',
+          ico: '/src/assets/img/ico1.png',
+          count: 9,
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
-    id: 3,
-    name: 'Предмет3',
-    description: 'Описание',
-    ico: '/src/assets/img/ico3.png',
-    count: 9,
-  },
-  {
+        },
+        {
+          id: 3,
+          name: 'Предмет3',
+          description: 'Описание',
+          ico: '/src/assets/img/ico3.png',
+          count: 9,
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
-    id: 2,
-    name: 'Предмет2',
-    description: 'Описание',
-    ico: '/src/assets/img/ico2.png',
-    count: 9,
-  },
-  {
+        },
+        {
+          id: 2,
+          name: 'Предмет2',
+          description: 'Описание',
+          ico: '/src/assets/img/ico2.png',
+          count: 9,
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-  {
+        },
+        {
 
-  },
-])
+        },
+      ];
+    }
+  } else {
+    items.value = [
+      {
+        id: 1,
+        name: 'Предмет1',
+        description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.',
+        ico: '/src/assets/img/ico1.png',
+        count: 9,
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+        id: 3,
+        name: 'Предмет3',
+        description: 'Описание',
+        ico: '/src/assets/img/ico3.png',
+        count: 9,
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+        id: 2,
+        name: 'Предмет2',
+        description: 'Описание',
+        ico: '/src/assets/img/ico2.png',
+        count: 9,
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+      {
+
+      },
+    ];
+  }
+})
+
+
+const updateLocalStorage = () => {
+  const parsed = JSON.stringify(items.value);
+  localStorage.setItem('items', parsed);
+  console.log('сохраняем...');
+}
+
+
+
+
+
+
 const modalState = ref(false)
 const modalItem = ref(null)
 
@@ -116,33 +230,30 @@ function closeModal() {
   modalState.value = false
 }
 
-function changeQuantity(item, number){
+function changeQuantity(item, number) {
   let itemFind = items.value.findIndex((i) => i.id === item.id)
   items.value[itemFind].count = items.value[itemFind].count - number;
-  // itemFind.value.count = itemFind.value.count - number;
+  updateLocalStorage();
 }
 
 function moveItem(currItemID, placeToMountID) {
   [items.value[currItemID], items.value[placeToMountID]] = [items.value[placeToMountID], items.value[currItemID]];
-
-  // console.log(items.value[$placeToMountID]);
-  // let item = items.value[$currItemID];
-  // items.value[$placeToMountID] = items.value[$currItemID].item;
-  // items.value[$currItemID].item = undefined;
-  // items.value.find(item => item.id == $placeToMountID);
+  updateLocalStorage();
 }
 
 </script>
+
 <style lang="scss">
 .slide-enter-active .modal,
-.slide-leave-active .modal{
+.slide-leave-active .modal {
   transition: .5s ease-in-out;
 }
 
 .slide-enter-from .modal,
-.slide-leave-to .modal{
+.slide-leave-to .modal {
   right: -250px;
 }
+
 .inventory_main {
   overflow: hidden;
   border-radius: 12px;

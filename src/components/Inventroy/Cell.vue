@@ -12,7 +12,6 @@ const startDrag = (event, id) => {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('id', id);
-    console.log('drag');
 }
 
 const onDrop = (event, id) => {
@@ -28,7 +27,6 @@ const dragOver = (e) => {
 }
 const click = () => {
     emit('openModal', props.item)
-    console.log(props.item);
 }
 </script>
 
@@ -76,7 +74,9 @@ const click = () => {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5px;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
             position: absolute;
             bottom: 0;
             right: 0;

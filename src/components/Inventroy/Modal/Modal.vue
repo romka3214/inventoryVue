@@ -5,10 +5,15 @@
         <div class="modal">
             <img :src=item.ico>
             <div class="decoration_line"></div>
-            <div class="name">{{ item.name }}</div>
-            <div class="description">{{ item.description }}</div>
-            <div class="decoration_line"></div>
+            <Suspense>
+                <ItemDescription :item="item" />
+                <template #fallback>
+                    <ItemDescriptionSkeleton />
+                </template>
+            </Suspense>
 
+
+            <div class="decoration_line"></div>
             <ButtonRed class="deleteButton" style="vertical-align:bottom;" @click="showDeleteItemPopUp">
                 Удалить предмет
             </ButtonRed>
@@ -27,10 +32,15 @@
 </template>
 
 <script setup>
-import CloseButton from './../UI/CloseButton.vue';
-import ButtonRed from './../UI/ButtonRed.vue';
+import CloseButton from './../../UI/CloseButton.vue';
+import ButtonRed from './../../UI/ButtonRed.vue';
 import DeleteItem from './DeleteItem.vue';
+import ItemDescription from './ItemDescription.vue';
+import ItemDescriptionSkeleton from './ItemDescriptionSkeleton.vue';
 import { ref } from 'vue';
+
+
+
 
 const emit = defineEmits(['closeModal', 'changeQuantity'])
 
@@ -59,14 +69,25 @@ const close = () => {
 
 <style lang="scss">
 .slideToTop-enter-active,
-.slideToTop-leave-active{
-  transition: .5s ease-in-out;
+.slideToTop-leave-active {
+    transition: .5s ease-in-out;
 }
 
 .slideToTop-enter-from,
-.slideToTop-leave-to{
-  bottom: -143px;
+.slideToTop-leave-to {
+    bottom: -143px;
 }
+
+.exit_modal {
+    z-index: 90;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .modal_back {
     width: 100%;
     height: 100%;
@@ -106,17 +127,6 @@ const close = () => {
             background: #4D4D4D;
         }
 
-        .name {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 26px;
-        }
-
-        .description {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
         .deleteButton {
             position: absolute;
             bottom: 20px;
@@ -124,15 +134,7 @@ const close = () => {
             z-index: 95;
         }
 
-        .exit_modal {
-            z-index: 90;
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+
     }
 }
 </style>
